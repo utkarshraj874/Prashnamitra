@@ -1,10 +1,10 @@
 venv/
-
+.env 
 __pycache__/
 
 *.pyc
 
-.env
+log/
 
 data/chroma/
 
@@ -15,5 +15,5 @@ data/uploads/
 .vscode/
 
 .idea/
-
+.vscode
 .DS_Store

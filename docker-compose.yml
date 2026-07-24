@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16
+
+    container_name: documind-db
+
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: documind
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+
+    build: .
+
+    container_name: documind-app
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "8501:8501"
+
+    env_file:
+      - .env
+
+    volumes:
+      - .:/app
+
+volumes:
+
+  postgres_data:
