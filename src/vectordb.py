@@ -1,11 +1,60 @@
 from pathlib import Path
 from typing import List
 
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 
 from src.embeddings import EmbeddingGenerator
 from src.logger import logger
+
+
+class FolderDocumentIndexer:
+    """Load supported files from a connected folder and turn them into LangChain documents."""
+
+    SUPPORTED_EXTENSIONS = {".pdf", ".txt", ".md"}
+
+    @staticmethod
+    def list_supported_files(folder_path: str | Path) -> List[Path]:
+        folder = Path(folder_path)
+        if not folder.exists() or not folder.is_dir():
+            return []
+
+        files = []
+        for file_path in folder.rglob("*"):
+            if file_path.is_file() and file_path.suffix.lower() in FolderDocumentIndexer.SUPPORTED_EXTENSIONS:
+                files.append(file_path)
+        return sorted(files)
+
+    @classmethod
+    def load_documents(cls, folder_path: str | Path) -> List[Document]:
+        documents: List[Document] = []
+
+        for file_path in cls.list_supported_files(folder_path):
+            if file_path.suffix.lower() == ".pdf":
+                loader = PyPDFLoader(str(file_path))
+                loaded_docs = loader.load()
+            else:
+                loader = TextLoader(str(file_path), encoding="utf-8")
+                loaded_docs = loader.load()
+
+            for doc in loaded_docs:
+                doc.metadata["source_file"] = file_path.name
+                doc.metadata["source_path"] = str(file_path)
+                documents.append(doc)
+
+        return documents
+
+    @classmethod
+    def index_folder(cls, folder_path: str | Path, persist_directory: str | Path):
+        documents = cls.load_documents(folder_path)
+        if not documents:
+            raise ValueError("No supported documents were found in the selected folder.")
+
+        vector_store_manager = VectorStoreManager(persist_directory=persist_directory)
+        vectorstore = vector_store_manager.create_vectorstore(documents)
+        return vectorstore, documents
+
 
 class VectorStoreManager: # jab vectorstore manager call hoga , yani object banega , tab python khud se inital setup akr dega 
     """

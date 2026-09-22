@@ -22,12 +22,12 @@ class EmbeddingGenerator:
 
         logger.info(f"Generating embedding for {len(chunks)} chunks")
 
-        texts = [
+        texts = [# extract only the texts(page content) from each documents
             chunk.page_content
             for chunk in chunks 
         ]
-        embeddings = self.embedding_model.embed_documents(texts)
-
+        embeddings = self.embedding_model.embed_documents(texts) # model ko text dikhaye jaate hai wo embedding(vectors genrate akrta hai )
+               # embed_documents ये MistralAIEmbeddings class का method है (जो langchain_mistralai library में पहले से बना हुआ है)।
         logger.info("Embeddings generated sucessfully ")
 
         return embeddings

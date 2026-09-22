@@ -62,12 +62,13 @@ class PDFLoader:
         try:
             logger.info(f"Loading PDF: {self.pdf_path.name}")
 
-            loader = PyPDFLoader(str(self.pdf_path))
+            loader = PyPDFLoader(str(self.pdf_path))#PyPDFLoader को path दिया जाता है।,
 
-            documents = loader.load()
+            documents = loader.load()#.load pdf ko padhkar usko list of page bana deta hai 
 
             for doc in documents:
-                doc.metadata["source_file"] = self.pdf_path.name
+                doc.metadata["source_file"] = self.pdf_path.name # har document ke metadat ame source file ka name add kar diya jaata hai , 
+                # isse pta chalta ahi ki kon sa chunk kis pdf ka hai 
 
             logger.info(f"{self.pdf_path.name} loaded successfully")
 

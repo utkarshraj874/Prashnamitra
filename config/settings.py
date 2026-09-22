@@ -16,12 +16,21 @@ CHROMA_DIR.mkdir(parents=True,exist_ok=True)
 
 #api keys
 
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+def _clean_key(key_name: str):
+    value = os.getenv(key_name)
+    if value is None:
+        return None
+    value = value.strip().strip('"').strip("'")
+    return value or None
+
+
+GROQ_API_KEY = _clean_key("GROQ_API_KEY") or _clean_key("GROQCLOUD_API_KEY")
+MISTRAL_API_KEY = _clean_key("MISTRAL_API_KEY")
 
 # models
 
-EMBEDDING_MODEL = "mistral-embed"#for converting text into vector 
-CHAT_MODEL = "mistral-small-latest"
+EMBEDDING_MODEL = "mistral-embed"  # used for vector generation
+CHAT_MODEL = "openai/gpt-oss-20b"  # working Groq model for this API key
 TEMPERATURE = 0.2
 
 #chunk Settings
@@ -40,6 +49,6 @@ SEARCH_TYPE = "mmr" #maximal marginal relevance search strategy
 
 #stremlit 
 
-APP_TITLE = "DocuMind AI"
+APP_TITLE = "PrashnaMitra"
 PAGE_LAYOUT = "wide"
 

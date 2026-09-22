@@ -1,19 +1,14 @@
 venv/
-.env 
-__pycache__/
+.env
 
+__pycache__/
 *.pyc
 
-log/
+logs/
 
-data/chroma/
-
-data/uploads/
+config/data/chroma/
+config/data/uploads/
 
 .streamlit/
-
 .vscode/
-
 .idea/
-.vscode
-.DS_Store
