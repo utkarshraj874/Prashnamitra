@@ -1,6 +1,6 @@
-# 📚 DocuMind AI
+# 📚 PrashnaMitra
 
-DocuMind AI is a Retrieval-Augmented Generation (RAG) chatbot that now adds a lightweight LangGraph agent layer and a small MCP tool layer on top of the current document workflow. Users can upload PDFs, ask document-based questions, use a calculator tool, and trigger document actions such as summarization, study guides, and question generation.
+PrashnaMitra is a Retrieval-Augmented Generation (RAG) chatbot that now adds a lightweight LangGraph agent layer and a small MCP tool layer on top of the current document workflow. Users can upload PDFs, ask document-based questions, use a calculator tool, and trigger document actions such as summarization, study guides, and question generation.
 
 ---
 
@@ -135,6 +135,6 @@ Calculate 25% of 800.
 
 ## 👨‍💻 Author
 
-**Utkarsh Raj**
+**manish kumar **
 
 If you found this project helpful, feel free to ⭐ the repository.
